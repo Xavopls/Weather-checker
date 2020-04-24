@@ -3,6 +3,6 @@ var router = express.Router();
 const controller = require('../controllers/addresses.js');
 
 /* GET users listing. */
-router.get('/validate', controller.validate);
+router.post('/validate', controller.validate);
 
 module.exports = router;

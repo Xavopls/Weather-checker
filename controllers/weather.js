@@ -1,13 +1,10 @@
+const weather_utils = require('../utils/open-weather')
 
 const weather_from_lat_lon = (req, res) => {
-
-};
-
-const weather_from_address = (req, res) => {
-
+    const weather = weather_utils.getWeatherFromLatLon()
+    console.log(weather);
 };
 
 module.exports = {
-    weather_from_lat_lon,
-    weather_from_address
+    weather_from_lat_lon
 };

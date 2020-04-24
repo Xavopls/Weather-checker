@@ -1,8 +1,8 @@
-console.log(process.env);
 const express = require('express');
+require('dotenv').config()
 const path = require('path');
 const cors = require('cors');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.SV_PORT || 5000;
 const bodyParser = require('body-parser');
 
 const server = express();
@@ -21,7 +21,7 @@ server
 
 // Routes
 server.use('/weather', require('./routes/weather'));
-server.use('/address.js', require('./routes/addresses'));
+server.use('/address', require('./routes/addresses'));
 
 
 // Server listening

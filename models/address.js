@@ -5,13 +5,13 @@ const AddressSchema = new mongoose.Schema({
     street: {
         type: String,
     },
-    street_number: {
+    streetNumber: {
         type: String,
     },
     town: {
         type: String,
     },
-    postal_code: {
+    postalCode: {
         type: String,
     },
     country: {

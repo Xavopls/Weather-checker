@@ -25,7 +25,29 @@ function getAddressFromCoords(lat, long){
         });
 
 }
+
+function validateAddress(address){
+
+    // ToDo: CHECK IF THE ADDRESS IS ALREADY VALIDATED (mongodb)
+    // IF IT IS
+    // RETURN 2
+    // IF ITS NOT
+    googleMapsClient.geocode({address: address})
+        .asPromise()
+        .then((response) => {
+            if(response.json.results.length){
+                // ToDO: STORE THE ADDRESS INTO THE DB
+                return 1;
+            }
+            return 0;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 module.exports = {
     getCoordsFromAddress,
-    getAddressFromCoords
+    getAddressFromCoords,
+    validateAddress
 };

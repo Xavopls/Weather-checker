@@ -6,7 +6,7 @@ function initWeather(){
     weather.setAPPID(process.env.OPEN_WEATHER_API_KEY);
 }
 
-function getWeatherFromLatLon(latitude, longitude) {
+function getWeatherFromCoords(latitude, longitude) {
     initWeather();
     weather.setCoordinate(latitude, longitude);
     weather.getAllWeather(function(err, weatherObject){
@@ -18,5 +18,5 @@ function getWeatherFromLatLon(latitude, longitude) {
 }
 
 module.exports = {
-    getWeatherFromLatLon
+    getWeatherFromCoords
 };

@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const PORT = process.env.SV_PORT || 5000;
 const bodyParser = require('body-parser');
+const utilsDB = require('./utils/mongo-utils')
 
 const server = express();
 
@@ -17,6 +18,11 @@ server
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .get('/', (req, res) => res.render('pages/index'));
+
+// Connection to MongoDB
+utilsDB.connectMongo()
+    .then()
+    .catch(error => console.log('Error on connection: ', error));
 
 
 // Routes

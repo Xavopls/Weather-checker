@@ -9,10 +9,6 @@ npm-debug.log
 *.docx
 *.pdf
 
-# Docker
-Dockerfile
-docker-compose.yml
-
 .idea/
 .vscode/
 Weather-Checker.iml

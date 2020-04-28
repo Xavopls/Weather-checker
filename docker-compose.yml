@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+#  redis-server:
+#    image: 'redis'
+
+  mongo:
+    container_name: mongo
+    image: 'mongo'
+    ports:
+    - "27017:27017"
+
+  node_api:
+    container_name: node_api
+    build: .
+    links:
+      - mongo
+    ports:
+      - "5000:5000"

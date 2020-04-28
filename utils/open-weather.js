@@ -1,20 +1,18 @@
-let weather = require('openweather-apis');
+const axios = require('axios');
 
-function initWeather(){
-    weather.setLang(process.env.OPEN_WEATHER_LANGUAGE);
-    weather.setUnits(process.env.OPEN_WEATHER_UNITS);
-    weather.setAPPID(process.env.OPEN_WEATHER_API_KEY);
-}
 
-function getWeatherFromCoords(latitude, longitude) {
-    initWeather();
-    weather.setCoordinate(latitude, longitude);
-    weather.getAllWeather(function(err, weatherObject){
-        if(err){
-            console.log(err);
-        }
-        return weatherObject;
-    });
+async function getWeatherFromCoords(lat, lon) {
+    let weather = []
+    await axios.get('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+process.env.OPEN_WEATHER_API_KEY+'&units=metric')
+        .then(function (response) {
+            weather.push(response.data.main)
+            weather.push(response.data.weather)
+            return(weather);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }
 
 module.exports = {

@@ -6,7 +6,7 @@ const controller = require('../controllers/weather.js');
 router.post('/get/latlong', controller.weather_from_coords);
 
 // Sends the weather from an Address, also checks if address is valid.
-//router.get('/get/address', controller.weather_from_address);
+router.post('/get/latlong/validate', controller.weather_from_coords_validate);
 
 
 module.exports = router;

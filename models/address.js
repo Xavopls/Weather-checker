@@ -16,6 +16,9 @@ const AddressSchema = new mongoose.Schema({
     },
     country: {
         type: String
+    },
+    updatedAt: {
+        type: Number
     }
 });
 

@@ -7,7 +7,8 @@ const Address = require('../models/address.js');
 
 async function getCoordsFromAddress(address){
     return new Promise(async function(resolve, reject)  {
-        await googleMapsClient.geocode({address: address})
+        await googleMapsClient.geocode({address: address.streetNumber+", "+address.street+", "+
+                address.postalCode+", "+address.town+", "+address.country})
             .asPromise()
             .then((response) => {
                 resolve([response.json.results[0].geometry.location.lat,response.json.results[0].geometry.location.lng]);
@@ -19,26 +20,16 @@ async function getCoordsFromAddress(address){
 
 }
 
-function getAddressFromCoords(lat, long){
-    googleMapsClient.reverseGeocode({latlng: [lat, long]})
-        .asPromise()
-        .then((response) => {
-            console.log(response.json.results);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-
-}
-
-async function validateAddress(query_address, address){
+async function validateAddress(address){
     // Check if it's validated
+
     if(await isValidated(address)){
         return 2;
     }
     //If it's not
     else{
-        return googleMapsClient.geocode({address: query_address})
+        return googleMapsClient.geocode({address: address.streetNumber+", "+address.street+","+
+                address.postalCode+","+address.town+","+address.country})
         .asPromise()
         .then((response) => {
             if(response.json.results.length){
@@ -62,12 +53,24 @@ function isValidated(address){
         streetNumber: address.streetNumber,
         postalCode: address.postalCode,
     },function (err, _address) {
-        if (_address) return true;
-        else return false;
+        if(_address){
+            // Check if has been validated in 12h
+            const diff_ms = Math.abs(_address.lastCheckAt - Date.now());
+            console.log('DIFFFFFFFF', diff_ms);
+            if (diff_ms > 12*60*60*1000){
+                _address.lastCheckAt = Date.now();
+                _address.save();
+                return true;
+            }
+            else return false;
+        }
+        // Address non existent
+        else{
+            return false;
+        }
     })
 }
 module.exports = {
     getCoordsFromAddress,
-    getAddressFromCoords,
     validateAddress
 };

@@ -6,8 +6,7 @@ const Address = require('../models/address.js');
 validate = asyncHandler(async(req, res, next) => {
     const address = req.body.address;
     // Validate the address
-    await address_utils.validateAddress(address.streetNumber+", "+address.street+","+
-        address.postalCode+","+address.town+","+address.country, address)
+    await address_utils.validateAddress(address)
         .then((validated) =>{
             if(validated  === 2)
                 res.status(202).send('Already Validated address');
